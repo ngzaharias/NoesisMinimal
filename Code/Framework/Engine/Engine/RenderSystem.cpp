@@ -1,0 +1,47 @@
+#include "EnginePCH.h"
+#include "Engine/RenderSystem.h"
+
+#include "ECS/EntityWorld.h"
+#include "ECS/QueryTypes.h"
+#include "ECS/WorldView.h"
+#include "Engine/RenderStage_Noesis_Post.h"
+#include "Engine/RenderStage_Noesis_Pre.h"
+
+// http://realtimecollisiondetection.net/blog/?p=86
+// https://blog.molecular-matters.com/2014/11/06/stateless-layered-multi-threaded-rendering-part-1/
+// https://gamedevelopment.tutsplus.com/articles/gamma-correction-and-why-it-matters--gamedev-14466
+
+eng::RenderSystem::RenderSystem(ecs::EntityWorld& entityWorld)
+	: m_EntityWorld(entityWorld)
+{
+	RegisterStage<eng::RenderStage_Noesis_Pre>();
+	RegisterStage<eng::RenderStage_Noesis_Post>();
+}
+
+eng::RenderSystem::~RenderSystem()
+{
+	for (RenderStage* stage : m_RenderStages)
+		delete stage;
+	m_RenderStages.RemoveAll();
+}
+
+void eng::RenderSystem::Initialise(World& world)
+{
+	for (auto&& stage : m_RenderStages)
+		stage->Initialise(m_EntityWorld);
+}
+
+void eng::RenderSystem::Shutdown(World& world)
+{
+	for (auto&& stage : m_RenderStages)
+		stage->Shutdown(m_EntityWorld);
+}
+
+void eng::RenderSystem::Update(World& world, const GameTime& gameTime)
+{
+	PROFILE_FUNCTION();
+
+	for (auto&& stage : m_RenderStages)
+		stage->Render(m_EntityWorld);
+}
+

@@ -1,0 +1,60 @@
+[Bb]uild
+[Gg]enerated
+[Ii]ntermediate
+[Ss]olution
+_Code
+.vs
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+//*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+//*.lib
+
+# Executables
+*.exe
+!App.StudioTool.exe
+!premake5.exe
+!optick.exe
+!7za.exe
+*.out
+*.app
+
+*.vc
+*.db
+*.opendb
+*.user
+imgui.ini
+
+# Project Files
+*.sln
+*.obsidian
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.kra
+*.krz~
+Package/Steam.zip
+/BuildInsights
+/Package/Steam
+/Assets/UI/Fonts
+/Assets/UI/Textures
