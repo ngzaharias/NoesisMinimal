@@ -94,9 +94,6 @@ void eng::Application::Initialise()
 	m_UIManager.CreateWidget(NAME("MainWindow.xaml"));
 
 	{
-		const auto& windowManager = m_EntityWorld.ReadResource<eng::WindowManager>();
-		m_UIManager.Initialise(*windowManager.GetWindow(0));
-
 		input::Layer layer;
 		layer.m_Priority = eng::EInputPriority::GameUI;
 		layer.m_Callback.Connect(m_UIManager, &eng::UIManager::ProcessInput);
