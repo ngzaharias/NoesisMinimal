@@ -7,10 +7,13 @@
 #include "Core/Name.h"
 #include "Core/Path.h"
 #include "Core/Set.h"
+#include "Engine/App.Interactivity.cpp"
+#include "Engine/UIAction.h"
 #include "Engine/Window.h"
 #include "Input/Key.h"
 #include "Math/Vector.h"
 
+#include <NoesisGUI/License.h>
 #include <NsApp/LocalFontProvider.h>
 #include <NsApp/LocalTextureProvider.h>
 #include <NsApp/LocalXamlProvider.h>
@@ -24,7 +27,6 @@
 #include <NsGui/Uri.h>
 #include <NsGui/UserControl.h>
 #include <NsRender/GLFactory.h>
-#include <NoesisGUI/License.h>
 
 // https://www.noesisengine.com/docs/4.0/Gui.Studio.Documentation_Index.html
 // https://www.noesisengine.com/docs/Gui.Core.SDKGuide.html
@@ -183,6 +185,8 @@ void eng::UIManager::Initialise(const eng::Window& window)
 {
 	m_Window = &window;
 
+	Noesis::RegisterComponent<eng::UIAction>();
+
 	// A logging handler is installed here. You can also install a custom error handler and memory
 	// allocator (see IntegrationAPI.h). By default errors are redirected to the logging handler
 	Noesis::GUI::SetLogHandler([](const char*, uint32_t, uint32_t level, const char*, const char* msg)
@@ -194,6 +198,9 @@ void eng::UIManager::Initialise(const eng::Window& window)
 
 	Noesis::GUI::SetLicense(Noesis::strName, Noesis::strKey);
 	Noesis::GUI::Init();
+
+	NsRegisterReflectionAppInteractivity();
+	NsInitPackageAppInteractivity();
 
 	const str::Path fontPath = str::Path(str::EPath::Assets);
 	const str::Path texturePath = str::Path(str::EPath::Assets);
@@ -226,6 +233,7 @@ void eng::UIManager::Shutdown()
 
 	m_DataContexts.RemoveAll();
 
+	NsShutdownPackageAppInteractivity();
 	Noesis::GUI::Shutdown();
 }
 
