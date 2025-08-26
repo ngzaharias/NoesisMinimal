@@ -1,7 +1,7 @@
 package.path = package.path .. ";./Code/_Premake/?.lua"
 require "SmartArguments"
 
-workspace "ZEngine"
+workspace "NoesisMinimal"
 	location "Solution"
 	architecture "x86_64"
 	configurations { "Debug" }
